@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>pd_game</title>
+    <script src="phystem.js" type="text/javascript"></script>
+  </head>
+  <body onload='init();'>
+
+    <h2>pd_game</h2>
+    <div align="center">
+	  <canvas id="canvas1" width=200 height=200 style="-ms-touch-action:none;"></canvas>
+	</div>
+  <script type="application/javascript">
+   var psystem;
+   var M;
+   var m1,m2;
+   function init() {
+     psystem=new Phystem("canvas1",20,20,0.6);
+     psystem.makeEdge(0.3);
+     psystem.makeGravity(10);
+     M=new NonDynamicalObject(psystem,0,0,"rgba(0,100,100,0.5)");
+     M.r=0.1;
+     M.enableDrag();
+     m1=new DynamicalObject(psystem,-2,0,0,0,1,"rgba(0,0,255,0.5)");
+     m1.enableDrag();
+     con=new Connector(psystem,M,m1,"rgba(0,0,0,0.5)");
+     psystem.start();
+   }
+  </script>
+  </body>
+</html>

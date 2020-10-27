@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>javascriptによる物理シミュレーション（振り子）</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<script src="phystem.js" type="text/javascript"></script>
+	<link rel="STYLESHEET" href="ss.css" type="text/css">
+  </head>
+  <body onload='init();'>
+	<script type="application/javascript">
+	 var psystem;
+	 var M;
+	 var m1,m2;
+	 function init() {
+	   psystem=new Phystem("canvas1",10,10,0.6);
+	   psystem.makeEdge(0.3);
+	   psystem.makeGravity(5);
+	   M=new NonDynamicalObject(psystem,0,0,"rgba(0,100,100,0.5)");
+	   M.r=0.1;
+	   M.enableDrag();
+	   m1=new DynamicalObject(psystem,-2,0,0,0,1,"rgba(0,0,255,0.5)");
+	   m1.enableDrag();
+	   con=new Connector(psystem,M,m1,"rgba(0,0,0,0.5)");
+	   psystem.start();
+	 }
+	</script>
+	<div align="center">
+	  <canvas id="canvas1" width=200 height=200 style="-ms-touch-action:none;"></canvas>
+	</div>
+	<p>矢印の表示／非表示は右のボタンで調整→
+	  <button onClick="psystem.drawFFlg = !psystem.drawFFlg;">力を表示On/Off</button>
+	  <button onClick="psystem.drawVFlg = !psystem.drawVFlg;">速度表示On/Off</button>
+	</p>
+	<hr>
+	<p>　このプログラムの主要部分は以下の通り。</p>
+	<pre>
+	   psystem=new Phystem("canvas1",10,10,0.6);
+	   psystem.makeEdge(0.3);
+	   psystem.makeGravity(1);
+	   M=new NonDynamicalObject(psystem,0,0,"rgba(0,100,100,0.5)");
+	   M.r=0.1;
+	   M.enableDrag();
+	   m1=new DynamicalObject(psystem,-3,0,0,0,1,"rgba(0,0,255,0.5)");
+	   m1.enableDrag();
+	   con=new Connector(psystem,M,m1,"rgba(0,0,0,0.5)");
+	   psystem.start();
+	</pre>
+	<p>　最初の３行は「系を作り、壁と重力を加える」という作業である。</p>
+	<p>　このプログラムには三つの物体がある。</p>
+	<p>　一つ目の物体はMである。<span class="codepart">M=new NonDynamicalObject(psystem,0,0,"rgba(0,100,100,0.5)");</span>で、「動かない物体（NondDynamicalObject）を作り、系psystemの場所(0,0)に置いている。色を<span class="codepart">rgba(0,100,100,0.5)</span>にした。次の行の<span class="codepart">M.r=0.1;</span>で、半径を0.1にしている。</p>
+	<p>　二つ目の物体はm1であり、<span class="codepart">m1=new DynamicalObject(psystem,-3,0,0,Math.sqrt(0.5),1,"rgba(255,0,0,0.5)");</span>で、系psystemの場所(-3,0)に（最初は）置かれる。</p>
+	<p>　初速度は0にしている。その後の1は質量が1であることを指定し、最後で色を<span class="codepart">rgba(255,0,0,0.5)</span>にした。</p>
+	<p>　最後の物体が大事で、物体と物体をつなぐ「コネクタ」である。</p>
+	<p><span class="codepart">con=new Connector(psystem,M,m1,"rgba(0,0,0,0.5)");</span>が新しいコネクタを作る（ConnectorはSpringというオブジェクトから作られている）。</p>
+	<p>　<span class="codepart">Connector</span>の第１の引数は例によって所属する系だが、第２，第３の引数は「そのコネクタが何と何をつないでいるか」を示す。今の場合は<span class="codepart">M,m1</span>なので、Mとm1が繋がれているのである。</p>
+	<p>　最後の引数は例によって色である。</p>
+
+	<div class="box">
+	  <p align="center">課題</p>
+	  <ol>
+		<li>【ちょっと難しい】物体を２個にして、二重振り子にしてみよう。</li>
+		<li>【ちょっと難しい】物体を２個と固定点で、三角形の振り子を作ってみよう。</li>
+		<li>その他思いついたことはなんでもやってみて。</li>
+	  </ol>
+	</div>
+	<hr>
+	<p>　たくさんの振り子を一斉に振らせてみたのが、<a href="furikotakusan.html">振り子たくさん</a>。</p>
+	<p>　二つの物体をつないで、振り子ではなく自由に動くようにしたのが<a href="arei.html">亜鈴</a>。</p>
+	<p align="center"><a href="./index.html#index">目次に戻る</a></p>
+  </body>
+</html>
