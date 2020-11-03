@@ -136,6 +136,13 @@ window.onload=function(){
 window.addEventListener("deviceorientation", function(e){
   console.log(e.gamma);
   document.getElementById("txtY").value = e.gamma;
+
+  if(e.gamma>10){
+    walk(2);
+  }else if(e.gamma<-10){
+    walk(-2);
+  }
+  
 }, false);
 
 function MoveByMouse(){
