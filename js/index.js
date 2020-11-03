@@ -11,8 +11,15 @@ const Engine = Matter.Engine,
 
 const engine = Engine.create(),
     world = engine.world;
-
+const runner = Runner.create();
 world.gravity.scale = 0.002;
+
+let mX=400,
+    mY=0,
+    targetColor=0,
+    balls = [];
+
+const ballLens = [200,240,280];
 
 // create renderer
 const render = Render.create({
@@ -37,6 +44,8 @@ function make_pend(l,color="rgb(44, 76, 164)"){
       fillStyle: color
     }
   });
+  balls.push(ball);
+
   World.add(world, ball);
   World.add(world, Constraint.create({
       bodyA: ball2,
@@ -44,7 +53,7 @@ function make_pend(l,color="rgb(44, 76, 164)"){
   }));
 }
 
-const ball2 = Bodies.circle(400, 100, 10, {
+const ball2 = Bodies.circle(400, 140, 10, {
   density: 4*1e5,
   frictionAir: 0,
   render: {
@@ -57,21 +66,44 @@ const ground0 = Bodies.rectangle(0, 160, 1800, 10, { isStatic: true });
     ground1 = Bodies.rectangle(0, 0, 10,320, { isStatic: true }),
     ground2 = Bodies.rectangle(800, 0, 10,320, { isStatic: true });
 
-World.add(world, ball2);
-World.add(world, ground0);
-World.add(world, ground1);
-World.add(world, ground2);
-make_pend(200,"rgb(226, 99, 99)");
-make_pend(240,"rgb(99, 226, 101)");
-make_pend(280,"rgb(99, 113, 226)");
+
+function StartGame(target){
+  World.add(world, ball2);
+  World.add(world, ground0);
+  World.add(world, ground1);
+  World.add(world, ground2);
+  make_pend(200,"rgb(226, 99, 99)");
+  make_pend(240,"rgb(99, 226, 101)");
+  make_pend(280,"rgb(99, 113, 226)");
+
+  targetColor = target;
+
+  Runner.run(runner, engine);
+  setInterval("MoveByMouse()",20);
+}
+
+function RestartGame(target){
+  console.log(balls);
+  targetColor = target;
+  Body.setPosition(ball2,{x:400,y:140});
+  balls.forEach((ball,i) => {
+    Body.setPosition(ball,{x:400,y:100 + ballLens[i]});
+    Body.setVelocity(ball,{x:0,y:0});
+  });
+}
+
+function SetColor(target){
+  if(targetColor==0){
+    StartGame(target);
+  }else{
+    RestartGame(target);
+  }
+}
 
 Render.run(render);
+// StartGame(1);
 
-var runner = Runner.create();
-Runner.run(runner, engine);
-
-// add mouse control
-var mouse = Mouse.create(render.canvas),
+const mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
@@ -82,54 +114,28 @@ var mouse = Mouse.create(render.canvas),
         }
     });
 
-function push(a){
-  Body.applyForce(ball2,ball2.position,{x:a * 1e6,y:0});
-  setTimeout(()=>{Body.setVelocity(ball2,{x:0,y:0})},100);
+function walk(dx){
+  Body.setPosition(ball2,{
+    x:ball2.position.x + dx,
+    y:ball2.position.y
+  })
 }
 
-function walk(a){
-  Body.setPosition(ball2,{x:ball2.position.x+a,y:ball2.position.y})
-}
-
-let mX=400,
-    mY=0;
 window.onload=function(){
   document.body.addEventListener("mousemove", function(e){
 
-    mX = e.pageX;  //X座標
-    mY = e.pageY;  //Y座標
+    mX = e.pageX;
+    mY = e.pageY;
 
     document.getElementById("txtX").value = mX;
     document.getElementById("txtY").value = mY;
   });
 }
 
-document.addEventListener('keydown', (event) => {
-  const keyName = event.key;
-
-  if(keyName=="l"){
-    walk(2);
-  }
-  if(keyName=="k"){
-    walk(-2);
-  }
-
-  if (event.ctrlKey) {
-      console.log(`keydown:Ctrl + ${keyName}`);
-    } else if (event.shiftKey) {
-      console.log(`keydown:Shift + ${keyName}`);
-    } else {
-      console.log(`keydown:${keyName}`);
-    }
-});
-
 function MoveByMouse(){
-  console.log(mX);
   if(mX<350){
     walk(-2);
   }else if(mX>450){
     walk(2);
   }
 }
-
-setInterval("MoveByMouse()",20);

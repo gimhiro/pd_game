@@ -8,9 +8,19 @@
         <div>
           <input type="button" value="reset" onclick="ResetVelocity()">
         </div>
+
         <div>
-          X座標：<input type="text" id="txtX" />
-          Y座標：<input type="text" id="txtY" />
+          X座標：<input type="text" id="txtX">
+          Y座標：<input type="text" id="txtY">
+        </div>
+        <div>
+          目標設定：
+          <input type="button" value="Red" onclick="SetColor(1)">
+          <input type="button" value="Green" onclick="SetColor(2)">
+          <input type="button" value="Blue" onclick="SetColor(3)">
+        </div>
+        <div>
+          現在の目標：<span id="target_text"></span>
         </div>
         <script src="./js/matter.min.js"></script>
         <script src="./js/index.js"></script>
