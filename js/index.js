@@ -98,6 +98,7 @@ function SetColor(target){
   }else{
     RestartGame(target);
   }
+  mX=400;
 }
 
 Render.run(render);
