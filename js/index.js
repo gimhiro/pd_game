@@ -93,9 +93,9 @@ function RestartGame(target){
 }
 
 function SetColor(target){
-  if(targetColor==0){
+  if ( targetColor == 0 ){
     StartGame(target);
-  }else{
+  } else {
     RestartGame(target);
   }
   mX=400;
@@ -129,9 +129,14 @@ window.onload=function(){
     mY = e.pageY;
 
     document.getElementById("txtX").value = mX;
-    document.getElementById("txtY").value = mY;
+    // document.getElementById("txtY").value = mY;
   });
 }
+
+window.addEventListener("deviceorientation", function(e){
+  console.log(e.gamma);
+  document.getElementById("txtY").value = e.gamma;
+}, false);
 
 function MoveByMouse(){
   if(mX<350){
