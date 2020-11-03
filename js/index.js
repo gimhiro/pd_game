@@ -53,7 +53,7 @@ function make_pend(l,color="rgb(44, 76, 164)"){
   }));
 }
 
-const ball2 = Bodies.circle(400, 140, 10, {
+const ball2 = Bodies.circle(400, 100, 10, {
   density: 4*1e5,
   frictionAir: 0,
   render: {
@@ -62,9 +62,9 @@ const ball2 = Bodies.circle(400, 140, 10, {
   }
 });
 
-const ground0 = Bodies.rectangle(0, 160, 1800, 10, { isStatic: true });
-    ground1 = Bodies.rectangle(0, 0, 10,320, { isStatic: true }),
-    ground2 = Bodies.rectangle(800, 0, 10,320, { isStatic: true });
+const ground0 = Bodies.rectangle(0, 160, 1800, 10,  { isStatic: true });
+    ground1 = Bodies.rectangle(0, 0, 10, 320, { isStatic: true }),
+    ground2 = Bodies.rectangle(800, 0, 10, 320, { isStatic: true });
 
 
 function StartGame(target){
@@ -85,7 +85,7 @@ function StartGame(target){
 function RestartGame(target){
   console.log(balls);
   targetColor = target;
-  Body.setPosition(ball2,{x:400,y:140});
+  Body.setPosition(ball2,{x:400,y:100});
   balls.forEach((ball,i) => {
     Body.setPosition(ball,{x:400,y:100 + ballLens[i]});
     Body.setVelocity(ball,{x:0,y:0});
@@ -142,7 +142,7 @@ window.addEventListener("deviceorientation", function(e){
   }else if(e.gamma<-10){
     walk(-2);
   }
-  
+
 }, false);
 
 function MoveByMouse(){
