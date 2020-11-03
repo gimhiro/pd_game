@@ -91,7 +91,7 @@ function walk(a){
   Body.setPosition(ball2,{x:ball2.position.x+a,y:ball2.position.y})
 }
 
-var mX=400,
+let mX=400,
     mY=0;
 window.onload=function(){
   document.body.addEventListener("mousemove", function(e){
@@ -105,7 +105,7 @@ window.onload=function(){
 }
 
 document.addEventListener('keydown', (event) => {
-  var keyName = event.key;
+  const keyName = event.key;
 
   if(keyName=="l"){
     walk(2);
