@@ -11,6 +11,7 @@ const Engine = Matter.Engine,
 
 const engine = Engine.create(),
     world = engine.world;
+engine.enableSleeping = true;
 const runner = Runner.create();
 world.gravity.scale = 0.002;
 
@@ -87,6 +88,7 @@ function StartGame(target){
   // マウスによる操作
   // setInterval("MoveByMouse()",20);
 }
+
 
 function RestartGame(target){
   HideMenu();
@@ -165,11 +167,29 @@ window.addEventListener("deviceorientation", function(e){
 function HideMenu(){
   document.getElementById("menu").classList.toggle("inactive");
   document.getElementById("menu_icon").classList.toggle("inactive");
-  engine.timing.timeScale = 1.0;
+  RestartObjects();
 }
 
 function OpenMenu(){
   document.getElementById("menu").classList.toggle("inactive");
   document.getElementById("menu_icon").classList.toggle("inactive");
-  engine.timing.timeScale = 0.0;
+  SleepObjects();
+}
+
+let v_list = [0,0,0,0,0,0];
+
+function SleepObjects(){
+  engine.timing.timeScale = 0;
+  balls.forEach((item, i) => {
+    v_list[2*i] = item.velocity.x;
+    v_list[2*i + 1] = item.velocity.y;
+    Body.setVelocity(item,{x:0,y:0});
+  });
+}
+
+function RestartObjects(){
+  engine.timing.timeScale = 1;
+  balls.forEach((item, i) => {
+    Body.setVelocity(item,{x:v_list[2*i],y:v_list[2*i+1]});
+  });
 }
