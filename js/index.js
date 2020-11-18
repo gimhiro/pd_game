@@ -83,7 +83,9 @@ function StartGame(target){
   targetColor = target;
 
   Runner.run(runner, engine);
-  setInterval("MoveByMouse()",20);
+
+  // マウスによる操作
+  // setInterval("MoveByMouse()",20);
 }
 
 function RestartGame(target){
@@ -128,26 +130,16 @@ function walk(dx){
   })
 }
 
-window.onload=function(){
-  document.body.addEventListener("mousemove", function(e){
-    mX = e.pageX;
-    mY = e.pageY;
-    document.getElementById("txtX").value = mX;
-    // document.getElementById("txtY").value = mY;
-  });
-}
-
 // マウスによる操作
 //
-// window.addEventListener("deviceorientation", function(e){
-//   console.log(e.gamma);
-//   document.getElementById("txtY").value = e.gamma;
-//   if(e.gamma>10){
-//     walk(2);
-//   }else if(e.gamma<-10){
-//     walk(-2);
-//   }
-// }, false);
+// window.onload=function(){
+//   document.body.addEventListener("mousemove", function(e){
+//     mX = e.pageX;
+//     mY = e.pageY;
+//     document.getElementById("txtX").value = mX;
+//     // document.getElementById("txtY").value = mY;
+//   });
+// }
 //
 // function MoveByMouse(){
 //   if(mX<350){
@@ -156,6 +148,19 @@ window.onload=function(){
 //     walk(2);
 //   }
 // }
+
+
+window.addEventListener("deviceorientation", function(e){
+  console.log(e.gamma);
+  document.getElementById("txtY").value = e.gamma;
+  if(e.gamma>10){
+    walk(2);
+  }else if(e.gamma<-10){
+    walk(-2);
+  }
+}, false);
+
+
 
 function HideMenu(){
   document.getElementById("menu").classList.toggle("inactive");
