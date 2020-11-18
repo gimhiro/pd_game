@@ -87,7 +87,8 @@ function StartGame(target){
 }
 
 function RestartGame(target){
-  console.log(balls);
+  HideMenu();
+
   targetColor = target;
   Body.setVelocity(ball2,{x:0,y:0});
   Body.setPosition(ball2,{x:400,y:100});
@@ -136,27 +137,34 @@ window.onload=function(){
   });
 }
 
-window.addEventListener("deviceorientation", function(e){
-  console.log(e.gamma);
-  document.getElementById("txtY").value = e.gamma;
-  if(e.gamma>10){
-    walk(2);
-  }else if(e.gamma<-10){
-    walk(-2);
-  }
-}, false);
-
-function MoveByMouse(){
-  if(mX<350){
-    walk(-2);
-  }else if(mX>450){
-    walk(2);
-  }
-}
+// マウスによる操作
+//
+// window.addEventListener("deviceorientation", function(e){
+//   console.log(e.gamma);
+//   document.getElementById("txtY").value = e.gamma;
+//   if(e.gamma>10){
+//     walk(2);
+//   }else if(e.gamma<-10){
+//     walk(-2);
+//   }
+// }, false);
+//
+// function MoveByMouse(){
+//   if(mX<350){
+//     walk(-2);
+//   }else if(mX>450){
+//     walk(2);
+//   }
+// }
 
 function HideMenu(){
-  document.getElementById("menu").classList.add("inactive");
+  document.getElementById("menu").classList.toggle("inactive");
+  document.getElementById("menu_icon").classList.toggle("inactive");
+  engine.timing.timeScale = 1.0;
 }
+
 function OpenMenu(){
-  document.getElementById("menu").classList.remove("inactive");
+  document.getElementById("menu").classList.toggle("inactive");
+  document.getElementById("menu_icon").classList.toggle("inactive");
+  engine.timing.timeScale = 0.0;
 }
