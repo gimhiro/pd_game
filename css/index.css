@@ -8,6 +8,10 @@ body {
 	padding:0px;
 }
 
+/* スタイルの初期化 */
+input, button, select, textarea {
+  -webkit-appearance: none;
+}
 
 /***************************
  * canvas
