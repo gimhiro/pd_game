@@ -14,6 +14,9 @@ const engine = Engine.create(),
 const runner = Runner.create();
 world.gravity.scale = 0.002;
 
+const canvasWidth = window.innerWidth,
+      canvasHeight = window.innerHeight;
+
 let mX=400,
     mY=0,
     targetColor=0,
@@ -23,11 +26,11 @@ const ballLens = [200,240,280];
 
 // create renderer
 const render = Render.create({
-    element: document.body,
+    element: document.getElementById("container"),
     engine: engine,
     options: {
-        width: 800,
-        height: 600,
+        width: canvasWidth,
+        height: canvasHeight,
         background: 'rgb(149, 226, 227)',
         wireframes: false,
         showAngleIndicator: true
@@ -62,19 +65,20 @@ const ball2 = Bodies.circle(400, 100, 10, {
   }
 });
 
-const ground0 = Bodies.rectangle(0, 160, 1800, 10,  { isStatic: true });
+const ground0 = Bodies.rectangle(0, 160, 2 * canvasWidth, 10,  { isStatic: true });
     ground1 = Bodies.rectangle(0, 0, 10, 320, { isStatic: true }),
-    ground2 = Bodies.rectangle(800, 0, 10, 320, { isStatic: true });
-
+    ground2 = Bodies.rectangle(canvasWidth, 0, 10, 320, { isStatic: true });
 
 function StartGame(target){
+  HideMenu();
+
   World.add(world, ball2);
   World.add(world, ground0);
   World.add(world, ground1);
   World.add(world, ground2);
-  make_pend(200,"rgb(226, 99, 99)");
-  make_pend(240,"rgb(99, 226, 101)");
-  make_pend(280,"rgb(99, 113, 226)");
+  make_pend(200,"#e26363");
+  make_pend(240,"#63e265");
+  make_pend(280,"#6371e2");
 
   targetColor = target;
 
@@ -85,10 +89,11 @@ function StartGame(target){
 function RestartGame(target){
   console.log(balls);
   targetColor = target;
+  Body.setVelocity(ball2,{x:0,y:0});
   Body.setPosition(ball2,{x:400,y:100});
   balls.forEach((ball,i) => {
-    Body.setPosition(ball,{x:400,y:100 + ballLens[i]});
     Body.setVelocity(ball,{x:0,y:0});
+    Body.setPosition(ball,{x:400,y:100 + ballLens[i]});
   });
 }
 
@@ -110,7 +115,7 @@ const mouse = Mouse.create(render.canvas),
         constraint: {
           stiffness: 0.2,
           render: {
-            visible: false
+            visible: true
           }
         }
     });
@@ -124,10 +129,8 @@ function walk(dx){
 
 window.onload=function(){
   document.body.addEventListener("mousemove", function(e){
-
     mX = e.pageX;
     mY = e.pageY;
-
     document.getElementById("txtX").value = mX;
     // document.getElementById("txtY").value = mY;
   });
@@ -136,13 +139,11 @@ window.onload=function(){
 window.addEventListener("deviceorientation", function(e){
   console.log(e.gamma);
   document.getElementById("txtY").value = e.gamma;
-
   if(e.gamma>10){
     walk(2);
   }else if(e.gamma<-10){
     walk(-2);
   }
-
 }, false);
 
 function MoveByMouse(){
@@ -151,4 +152,11 @@ function MoveByMouse(){
   }else if(mX>450){
     walk(2);
   }
+}
+
+function HideMenu(){
+  document.getElementById("menu").classList.add("inactive");
+}
+function OpenMenu(){
+  document.getElementById("menu").classList.remove("inactive");
 }

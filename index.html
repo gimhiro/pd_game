@@ -2,22 +2,27 @@
 <html lang="ja">
     <head>
         <title>Sample</title>
+        <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
         <div id="container"></div>
+        <div id="menu" class="panel">
+          <div class="panel_text">
+            <p>もくひょう</p>
+            <div class="panel_btn_group">
+              <input class="panel_btn panel_btn1" type="button" value="あか" onclick="SetColor(1)">
+              <input class="panel_btn panel_btn2" type="button" value="みどり" onclick="SetColor(2)">
+              <input class="panel_btn panel_btn3" type="button" value="あお" onclick="SetColor(3)">
+            </div>
+            <p>いまのもくひょう</p>
+            <span id="target_text">あか</span>
+          </div>
+        </div>
         <div style="display:none;">
           X座標：<input type="text" id="txtX">
           Y座標：<input type="text" id="txtY">
         </div>
-        <div>
-          目標設定：
-          <input type="button" value="Red" onclick="SetColor(1)">
-          <input type="button" value="Green" onclick="SetColor(2)">
-          <input type="button" value="Blue" onclick="SetColor(3)">
-        </div>
-        <div>
-          現在の目標：<span id="target_text"></span>
-        </div>
+
         <script src="./js/matter.min.js"></script>
         <script src="./js/index.js"></script>
     </body>

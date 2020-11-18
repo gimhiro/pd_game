@@ -1,0 +1,193 @@
+@charset "UTF-8";
+/***************************
+ * body
+ ***************************/
+
+body {
+	margin:0px;
+	padding:0px;
+}
+
+
+/***************************
+ * canvas
+ ***************************/
+
+#container{
+  position: absolute;
+
+  z-index: 10;
+}
+
+.panel{
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #5d627b;
+  background: white;
+  border-top: solid 10px #5d627b;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.22);
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  width: 70%;
+  height: 30%;
+  position: absolute;
+  top: 35%;
+  left: 15%;
+}
+
+.panel .panel_text{
+  text-align: center;
+  font-size: 44px;
+
+
+}
+
+.panel .panel_btn_group{
+  display: flex;
+  justify-content: center;
+}
+
+.panel_btn{
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+  font-size: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 14px 24px 10px 24px;
+  border-radius: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.inactive{
+  display: none;
+}
+
+
+
+.panel_btn:active{
+  transform: translateY(4px);
+  border-bottom: none;
+}
+
+.panel_btn1{
+  color: #FFF;
+  background-color: #e26363;
+  border-bottom: 4px solid #c35555;
+}
+
+.panel_btn2{
+  color: #FFF;
+  background-color: #63e265;
+  border-bottom: 4px solid #54c256;
+}
+
+.panel_btn3{
+  color: #FFF;
+  background-color: #6371e2;
+  border-bottom: 4px solid #525ebf;
+}
+
+.canvas_wrap {
+	position:relative;
+	width:100%;
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+	background-color:#888;
+}
+
+.canvas_box {
+	position:fixed;
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+	top:0;
+	left:0;
+	overflow:hidden;
+	background-color:#AAA;
+}
+
+#canvas_main {
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+
+/***************************
+ * canvas_start
+ ***************************/
+
+.canvas_start {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+	background-color:#0066cc;
+	opacity:0.5;
+	display:none;
+}
+
+.canvas_start .inner {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+	display:table;
+	width:100%;
+	height:100vh;
+}
+
+.canvas_start .inner p {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+	color:#ffffff;
+}
+
+
+/***************************
+ * canvas_loader
+ ***************************/
+
+.canvas_loader {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+	background-color:#00cc66;
+	display:none;
+}
+
+.canvas_loader .inner {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+	display:table;
+	width:100%;
+	height:100vh;
+}
+
+.canvas_loader .inner p {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+	color:#ffffff;
+}
