@@ -64,12 +64,20 @@ function CountUp(){
   score++;
   console.log({score});
   BoxTextUpdate()
+  if(score>=5){
+    GameClear();
+  }
 }
 
 function GameOver(){
   score = 0;
   const score_text = `ゲームオーバー<br>スコア ${score}`;
   PopUp(score_text,"とじる");
+  OpenMenu();
+}
+
+function GameClear(){
+  PopUp("クリアおめでとう！<br>他のボールにもチャレンジしてみてね！","とじる");
   OpenMenu();
 }
 
@@ -166,7 +174,7 @@ function SetColor(target){
   } else {
     RestartGame(target);
   }
-  mX=canvasWidth/2;
+  mX = canvasWidth / 2;
 }
 
 Render.run(render);
