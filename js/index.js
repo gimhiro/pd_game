@@ -6,6 +6,7 @@ const Engine = Matter.Engine,
     Mouse = Matter.Mouse,
     World = Matter.World,
     Constraint = Matter.Constraint,
+    Events = Matter.Events,
     Body = Matter.Body,
     Bodies = Matter.Bodies;
 
@@ -14,16 +15,19 @@ const engine = Engine.create(),
 engine.enableSleeping = true;
 const runner = Runner.create();
 world.gravity.scale = 0.002;
-
 const canvasWidth = window.innerWidth,
       canvasHeight = window.innerHeight;
 
-let mX=400,
+let mX = canvasWidth / 2,
     mY=0,
     targetColor=0,
-    balls = [];
+    balls = [],
+    score = 0;
+    isPC = true;
+    isStop = true;
 
 const ballLens = [200,240,280];
+const labels = ["NOTLABELED","RED","GREEN","BLUE"]
 
 // create renderer
 const render = Render.create({
@@ -38,16 +42,52 @@ const render = Render.create({
     }
 });
 
-function make_pend(l,color="rgb(44, 76, 164)"){
+Events.on(engine,"collisionStart",(e)=>{
+  console.log(e.pairs);
+  e.pairs.forEach((pair) => {
+    console.log(pair);
+    CheckBallColor(pair.bodyA.label);
+    CheckBallColor(pair.bodyB.label);
+  });
+});
+
+function CheckBallColor(str){
+  if(str==labels[targetColor]){
+    CountUp();
+  }else if(labels.includes(str)){
+    GameOver();
+  }else{
+    console.log("is not ball object");
+  }
+}
+
+function CountUp(){
+  score++;
+  console.log({score})
+}
+
+function GameOver(){
+  score=0;
+  PopUp("GameOver");
+  OpenMenu();
+}
+
+function PopUp(mes){
+  console.log(mes);
+}
+
+function make_pend(l,color="rgb(44, 76, 164)",label="Circle"){
   var ball = Bodies.circle(400, 100+l, 15, {
     density: 0.04,
     frictionAir: 0,
+    label: label,
     render: {
       lineWidth: 1,
       lineStyle: "rgb(172, 172, 172)",
       fillStyle: color
     }
   });
+
   balls.push(ball);
 
   World.add(world, ball);
@@ -57,9 +97,10 @@ function make_pend(l,color="rgb(44, 76, 164)"){
   }));
 }
 
-const ball2 = Bodies.circle(400, 100, 10, {
+const ball2 = Bodies.circle(canvasWidth / 2, 100, 10, {
   density: 4*1e5,
   frictionAir: 0,
+  label: "hinge",
   render: {
     lineWidth: 1,
     fillStyle: "rgb(38, 34, 38)"
@@ -77,16 +118,18 @@ function StartGame(target){
   World.add(world, ground0);
   World.add(world, ground1);
   World.add(world, ground2);
-  make_pend(200,"#e26363");
-  make_pend(240,"#63e265");
-  make_pend(280,"#6371e2");
+  make_pend(200,"#e26363","RED");
+  make_pend(240,"#63e265","GREEN");
+  make_pend(280,"#6371e2","BLUE");
 
   targetColor = target;
 
   Runner.run(runner, engine);
 
   // マウスによる操作
-  // setInterval("MoveByMouse()",20);
+  if(isPC){
+    setInterval("MoveByMouse()",20);
+  }
 }
 
 
@@ -95,10 +138,10 @@ function RestartGame(target){
 
   targetColor = target;
   Body.setVelocity(ball2,{x:0,y:0});
-  Body.setPosition(ball2,{x:400,y:100});
+  Body.setPosition(ball2,{x:canvasWidth / 2,y:100});
   balls.forEach((ball,i) => {
     Body.setVelocity(ball,{x:0,y:0});
-    Body.setPosition(ball,{x:400,y:100 + ballLens[i]});
+    Body.setPosition(ball,{x:canvasWidth / 2,y:100 + ballLens[i]});
   });
 }
 
@@ -108,7 +151,7 @@ function SetColor(target){
   } else {
     RestartGame(target);
   }
-  mX=400;
+  mX=canvasWidth/2;
 }
 
 Render.run(render);
@@ -126,35 +169,33 @@ const mouse = Mouse.create(render.canvas),
     });
 
 function walk(dx){
-  Body.setPosition(ball2,{
-    x:ball2.position.x + dx,
-    y:ball2.position.y
-  })
+  if(!isStop){
+    Body.setPosition(ball2,{
+      x:ball2.position.x + dx,
+      y:ball2.position.y
+    })
+  }
 }
 
 // マウスによる操作
-//
-// window.onload=function(){
-//   document.body.addEventListener("mousemove", function(e){
-//     mX = e.pageX;
-//     mY = e.pageY;
-//     document.getElementById("txtX").value = mX;
-//     // document.getElementById("txtY").value = mY;
-//   });
-// }
-//
-// function MoveByMouse(){
-//   if(mX<350){
-//     walk(-2);
-//   }else if(mX>450){
-//     walk(2);
-//   }
-// }
+window.onload=function(){
+  document.body.addEventListener("mousemove", function(e){
+    console.log(1);
+    mX = e.pageX;
+    mY = e.pageY;
+  });
+}
+
+function MoveByMouse(){
+  if(mX<canvasWidth*0.45){
+    walk(-2);
+  }else if(mX>canvasWidth*0.55){
+    walk(2);
+  }
+}
 
 
 window.addEventListener("deviceorientation", function(e){
-  console.log(e.gamma);
-  document.getElementById("txtY").value = e.gamma;
   if(e.gamma>10){
     walk(2);
   }else if(e.gamma<-10){
@@ -178,6 +219,7 @@ function OpenMenu(){
 
 let v_list = [0,0,0,0,0,0];
 
+
 function SleepObjects(){
   engine.timing.timeScale = 0;
   balls.forEach((item, i) => {
@@ -185,6 +227,7 @@ function SleepObjects(){
     v_list[2*i + 1] = item.velocity.y;
     Body.setVelocity(item,{x:0,y:0});
   });
+  isStop=!isStop;
 }
 
 function RestartObjects(){
@@ -192,4 +235,5 @@ function RestartObjects(){
   balls.forEach((item, i) => {
     Body.setVelocity(item,{x:v_list[2*i],y:v_list[2*i+1]});
   });
+  isStop=!isStop;
 }
