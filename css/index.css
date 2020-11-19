@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* @import "https://use.fontawesome.com/releases/v5.13.0/css/all.css"; */
+@import "https://use.fontawesome.com/releases/v5.13.0/css/all.css";
 /***************************
  * body
  ***************************/
@@ -124,8 +124,8 @@ input, button, select, textarea {
 .menu_icon{
   position: fixed;
   z-index: 20;
-  bottom: 0;
-  right: 10px;
+  bottom: 1%;
+  right: 2%;
   font-size: 50px;
 }
 

@@ -14,7 +14,7 @@ const engine = Engine.create(),
     world = engine.world;
 engine.enableSleeping = true;
 const runner = Runner.create();
-world.gravity.scale = 0.002;
+world.gravity.scale = 0.003;
 const canvasWidth = window.innerWidth,
       canvasHeight = window.innerHeight;
 
@@ -77,13 +77,14 @@ function GameOver(){
 }
 
 function GameClear(){
+  score = 0;
   PopUp("クリアおめでとう！<br>他のボールにもチャレンジしてみてね！","とじる");
   OpenMenu();
 }
 
 function BoxTextUpdate(){
   const colorName=["あか","みどり","あお"][targetColor-1];
-  const co_score=10-score;
+  const co_score=5-score;
   const box_text = `もくひょう：${colorName} <br>
   クリアまであと ${co_score} 回 <br>
   他の色のボールをぶつけないように気をつけよう！`;
@@ -160,6 +161,7 @@ function StartGame(target){
 function RestartGame(target){
   HideMenu();
   targetColor = target;
+  BoxTextUpdate();
   Body.setVelocity(ball2,{x:0,y:0});
   Body.setPosition(ball2,{x:canvasWidth / 2,y:100});
   balls.forEach((ball,i) => {
@@ -227,12 +229,14 @@ window.addEventListener("deviceorientation", function(e){
 function HideMenu(){
   document.getElementById("menu").classList.toggle("inactive");
   document.getElementById("menu_icon").classList.toggle("inactive");
+  document.getElementById("box").classList.toggle("inactive");
   RestartObjects();
 }
 
 function OpenMenu(){
   document.getElementById("menu").classList.toggle("inactive");
   document.getElementById("menu_icon").classList.toggle("inactive");
+  document.getElementById("box").classList.toggle("inactive");
   SleepObjects();
 }
 
