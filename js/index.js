@@ -72,7 +72,7 @@ function CountUp(){
 
 function GameOver(){
   score = 0;
-  const score_text = `ゲームオーバー<br>スコア ${score}`;
+  const score_text = `ゲームオーバー...<br>もういちどがんばろう！`;
   PopUp(score_text,"とじる");
   OpenMenu();
 }
