@@ -22,9 +22,10 @@ let mX = canvasWidth / 2,
     mY=0,
     targetColor=0,
     balls = [],
-    score = 0;
-    isPC = true;
-    isStop = true;
+    score = 0,
+    isPC = false,
+    isStop = true,
+    v_list = [0,0,0,0,0,0];
 
 const ballLens = [200,240,280];
 const labels = ["NOTLABELED","RED","GREEN","BLUE"]
@@ -43,9 +44,7 @@ const render = Render.create({
 });
 
 Events.on(engine,"collisionStart",(e)=>{
-  console.log(e.pairs);
   e.pairs.forEach((pair) => {
-    console.log(pair);
     CheckBallColor(pair.bodyA.label);
     CheckBallColor(pair.bodyB.label);
   });
@@ -57,23 +56,41 @@ function CheckBallColor(str){
   }else if(labels.includes(str)){
     GameOver();
   }else{
-    console.log("is not ball object");
+    // console.log("is not ball object");
   }
 }
 
 function CountUp(){
   score++;
-  console.log({score})
+  console.log({score});
+  BoxTextUpdate()
 }
 
 function GameOver(){
-  score=0;
-  PopUp("GameOver");
+  score = 0;
+  const score_text = `ゲームオーバー<br>スコア ${score}`;
+  PopUp(score_text,"とじる");
   OpenMenu();
 }
 
-function PopUp(mes){
-  console.log(mes);
+function BoxTextUpdate(){
+  const colorName=["あか","みどり","あお"][targetColor-1];
+  const co_score=10-score;
+  const box_text = `もくひょう：${colorName} <br>
+  クリアまであと ${co_score} 回 <br>
+  他の色のボールをぶつけないように気をつけよう！`;
+  document.getElementById("box_text").innerHTML = box_text;
+}
+
+function PopUp(mes,btn_val="とじる"){
+  console.log({mes});
+  document.getElementById("popup").classList.remove("inactive");
+  document.getElementById("popup_text").innerHTML = mes;
+  document.getElementById("popup_button").value = btn_val;
+}
+
+function ClosePopUp(){
+  document.getElementById("popup").classList.add("inactive");
 }
 
 function make_pend(l,color="rgb(44, 76, 164)",label="Circle"){
@@ -113,7 +130,6 @@ const ground0 = Bodies.rectangle(0, 160, 2 * canvasWidth, 10,  { isStatic: true 
 
 function StartGame(target){
   HideMenu();
-
   World.add(world, ball2);
   World.add(world, ground0);
   World.add(world, ground1);
@@ -123,7 +139,7 @@ function StartGame(target){
   make_pend(280,"#6371e2","BLUE");
 
   targetColor = target;
-
+  BoxTextUpdate();
   Runner.run(runner, engine);
 
   // マウスによる操作
@@ -135,7 +151,6 @@ function StartGame(target){
 
 function RestartGame(target){
   HideMenu();
-
   targetColor = target;
   Body.setVelocity(ball2,{x:0,y:0});
   Body.setPosition(ball2,{x:canvasWidth / 2,y:100});
@@ -155,17 +170,16 @@ function SetColor(target){
 }
 
 Render.run(render);
-// StartGame(1);
 
 const mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
-        mouse: mouse,
-        constraint: {
-          stiffness: 0.2,
-          render: {
-            visible: true
-          }
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: true
         }
+      }
     });
 
 function walk(dx){
@@ -194,7 +208,6 @@ function MoveByMouse(){
   }
 }
 
-
 window.addEventListener("deviceorientation", function(e){
   if(e.gamma>10){
     walk(2);
@@ -202,8 +215,6 @@ window.addEventListener("deviceorientation", function(e){
     walk(-2);
   }
 }, false);
-
-
 
 function HideMenu(){
   document.getElementById("menu").classList.toggle("inactive");
@@ -216,9 +227,6 @@ function OpenMenu(){
   document.getElementById("menu_icon").classList.toggle("inactive");
   SleepObjects();
 }
-
-let v_list = [0,0,0,0,0,0];
-
 
 function SleepObjects(){
   engine.timing.timeScale = 0;
