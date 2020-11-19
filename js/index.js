@@ -25,7 +25,8 @@ let mX = canvasWidth / 2,
     score = 0,
     isPC = false,
     isStop = true,
-    v_list = [0,0,0,0,0,0];
+    v_list = [0,0,0,0,0,0]
+    perm = true;
 
 const ballLens = [200,240,280];
 const labels = ["NOTLABELED","RED","GREEN","BLUE"]
@@ -63,7 +64,7 @@ function CheckBallColor(str){
 function CountUp(){
   score++;
   console.log({score});
-  BoxTextUpdate()
+  BoxTextUpdate();
   if(score>=5){
     GameClear();
   }
@@ -99,6 +100,10 @@ function PopUp(mes,btn_val="とじる"){
 }
 
 function ClosePopUp(){
+  if(!perm){
+    DeviceOrientationEvent.requestPermission();
+    perm=true;
+  }
   document.getElementById("popup").classList.add("inactive");
 }
 
@@ -256,4 +261,16 @@ function RestartObjects(){
     Body.setVelocity(item,{x:v_list[2*i],y:v_list[2*i+1]});
   });
   isStop=!isStop;
+}
+
+
+
+//iOS13+方式ならクリックイベントを要求
+if(typeof DeviceOrientationEvent.requestPermission==="function"){
+  perm=false;
+  PopUp("このアプリケーションはジャイロ機能を使用します","OK");
+//iOS13+じゃない
+}else{
+	//早くアップデートしてもらうのを祈りながら諦める
+	PopUp("ジャイロ機能が動かない場合は設定を確認すると改善する場合があります","OK");
 }
