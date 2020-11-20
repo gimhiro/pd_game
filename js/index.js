@@ -1,3 +1,4 @@
+// 物理エンジン用変数の設定
 const Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -10,14 +11,20 @@ const Engine = Matter.Engine,
     Body = Matter.Body,
     Bodies = Matter.Bodies;
 
+// 物理エンジンの設定
 const engine = Engine.create(),
-    world = engine.world;
+    world = engine.world,
+    runner = Runner.create();
 engine.enableSleeping = true;
-const runner = Runner.create();
 world.gravity.scale = 0.003;
-const canvasWidth = window.innerWidth,
-      canvasHeight = window.innerHeight;
 
+// 定数の宣言
+const canvasWidth = window.innerWidth,
+      canvasHeight = window.innerHeight,
+      ballLens = [200,240,280],
+      const labels = ["NOTLABELED","RED","GREEN","BLUE"]
+
+// 変数の宣言
 let mX = canvasWidth / 2,
     mY=0,
     targetColor=0,
@@ -28,9 +35,6 @@ let mX = canvasWidth / 2,
     v_list = [0,0,0,0,0,0]
     perm = true;
 
-const ballLens = [200,240,280];
-const labels = ["NOTLABELED","RED","GREEN","BLUE"]
-
 // create renderer
 const render = Render.create({
     element: document.getElementById("container"),
@@ -38,12 +42,13 @@ const render = Render.create({
     options: {
         width: canvasWidth,
         height: canvasHeight,
-        background: 'rgb(149, 226, 227)',
+        background: '#95e2e3',
         wireframes: false,
         showAngleIndicator: true
     }
 });
 
+//衝突イベントを設定
 Events.on(engine,"collisionStart",(e)=>{
   e.pairs.forEach((pair) => {
     CheckBallColor(pair.bodyA.label);
@@ -63,7 +68,7 @@ function CheckBallColor(str){
 
 function CountUp(){
   score++;
-  console.log({score});
+  // console.log({score});
   BoxTextUpdate();
   if(score>=5){
     GameClear();
@@ -93,7 +98,7 @@ function BoxTextUpdate(){
 }
 
 function PopUp(mes,btn_val="とじる"){
-  console.log({mes});
+  // console.log({mes});
   document.getElementById("popup").classList.remove("inactive");
   document.getElementById("popup_text").innerHTML = mes;
   document.getElementById("popup_button").value = btn_val;
@@ -223,6 +228,7 @@ function MoveByMouse(){
   }
 }
 
+//ジャイロイベントの登録
 window.addEventListener("deviceorientation", function(e){
   if(e.gamma>10){
     walk(2);
@@ -262,8 +268,6 @@ function RestartObjects(){
   });
   isStop=!isStop;
 }
-
-
 
 //iOS13+方式ならクリックイベントを要求
 if(typeof DeviceOrientationEvent.requestPermission==="function"){
