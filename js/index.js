@@ -22,7 +22,7 @@ world.gravity.scale = 0.003;
 const canvasWidth = window.innerWidth,
       canvasHeight = window.innerHeight,
       ballLens = [200,240,280],
-      const labels = ["NOTLABELED","RED","GREEN","BLUE"]
+      labels = ["NOTLABELED","RED","GREEN","BLUE"]
 
 // 変数の宣言
 let mX = canvasWidth / 2,
