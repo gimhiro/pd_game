@@ -84,9 +84,10 @@ function GameOver() {
 
 function GameClear() {
   score = 0;
+  const colorName = ['あか', 'みどり', 'あお'][targetColor - 1];
   PopUp('クリアおめでとう！<br>他のボールにもチャレンジしてみてね！', 'とじる');
   showTweetButton(
-    '「スマホde振り子！」ゲームクリア！ みんなもチャレンジしてみてね！',
+    `「スマホde振り子！」${colorName}の振り子でゲームクリア！ みんなもチャレンジしてみてね！`,
     'https://ut-cast.net/komafes2020/minigame/pendulum/',
   );
   OpenMenu();
