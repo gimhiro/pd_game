@@ -1,16 +1,19 @@
 @charset "UTF-8";
-@import "https://use.fontawesome.com/releases/v5.13.0/css/all.css";
+@import 'https://use.fontawesome.com/releases/v5.13.0/css/all.css';
 /***************************
  * body
  ***************************/
 
 body {
-	margin:0px;
-	padding:0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 /* スタイルの初期化 */
-input, button, select, textarea {
+input,
+button,
+select,
+textarea {
   -webkit-appearance: none;
 }
 
@@ -18,20 +21,19 @@ input, button, select, textarea {
  * canvas
  ***************************/
 
-#container{
+#container {
   position: absolute;
 
   z-index: 10;
 }
 
-.panel{
+.panel {
   padding: 0.5em 1em;
   margin: 2em 0;
   color: #5d627b;
   background: white;
   border-top: solid 10px #5d627b;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.22);
-
 
   display: flex;
   justify-content: center;
@@ -44,23 +46,23 @@ input, button, select, textarea {
   left: 15%;
 }
 
-.panel .panel_text{
+.panel .panel_text {
   text-align: center;
   font-size: 44px;
   line-height: 1.3em;
   font-family: 'Kosugi Maru', sans-serif;
 }
 
-.panel .panel_text .howtoplay{
+.panel .panel_text .howtoplay {
   font-size: 36px;
 }
 
-.panel .panel_btn_group{
+.panel .panel_btn_group {
   display: flex;
   justify-content: center;
 }
 
-.panel_btn{
+.panel_btn {
   display: inline-block;
   width: 33%;
   min-width: 180px;
@@ -74,29 +76,29 @@ input, button, select, textarea {
   margin-right: 10px;
 }
 
-.inactive{
+.inactive {
   display: none;
 }
 
-.panel_btn:active{
+.panel_btn:active {
   transform: translateY(4px);
   border-bottom: none;
 }
 
-.panel_btn1{
-  color: #FFF;
+.panel_btn1 {
+  color: #fff;
   background-color: #e26363;
   border-bottom: 4px solid #c35555;
 }
 
-.panel_btn2{
-  color: #FFF;
+.panel_btn2 {
+  color: #fff;
   background-color: #63e265;
   border-bottom: 4px solid #54c256;
 }
 
-.panel_btn3{
-  color: #FFF;
+.panel_btn3 {
+  color: #fff;
   background-color: #6371e2;
   border-bottom: 4px solid #525ebf;
 }
@@ -105,7 +107,7 @@ input, button, select, textarea {
   display: inline-block;
   text-decoration: none;
   color: #668ad8;
-  background-color: #FFF;
+  background-color: #fff;
   width: 120px;
   height: 120px;
   line-height: 120px;
@@ -114,14 +116,14 @@ input, button, select, textarea {
   text-align: center;
   overflow: hidden;
   font-weight: bold;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .btn-circle-border-simple:hover {
   background: #b3e1ff;
 }
 
-.menu_icon{
+.menu_icon {
   position: fixed;
   z-index: 20;
   bottom: 1%;
@@ -129,7 +131,7 @@ input, button, select, textarea {
   font-size: 50px;
 }
 
-.box{
+.box {
   position: fixed;
   z-index: 20;
   bottom: 1%;
@@ -144,7 +146,7 @@ input, button, select, textarea {
   color: #454545;
 }
 
-.box:after{
+.box:after {
   position: absolute;
   content: '';
   right: -7px;
@@ -160,9 +162,33 @@ input, button, select, textarea {
   padding: 0;
 }
 
-.box .box_text{
+.box .box_text {
   padding: 8px;
   font-size: 30px;
   line-height: 1.3em;
   font-family: 'Kosugi Maru', sans-serif;
+}
+
+.tweetButton {
+  width: 33%;
+  min-width: 180px;
+  text-align: center;
+  font-size: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 14px 28px 10px 28px;
+  border-radius: 8px;
+  margin: 0 10px;
+
+  color: white;
+
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+
+  background-color: #1da1f2;
+}
+
+.tweetButton:hover {
+  background-color: darken(#1da1f2, 10%);
 }

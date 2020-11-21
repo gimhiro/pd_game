@@ -1,54 +1,49 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <title>Sample</title>
-        <link rel="stylesheet" href="css/index.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div id="container"></div>
-        <div id="menu" class="panel">
-          <div class="panel_text">
-            <p>もくひょうせってい</p>
-            <div class="panel_btn_group">
-              <input class="panel_btn panel_btn1" type="button" value="あか" onclick="SetColor(1)">
-              <input class="panel_btn panel_btn2" type="button" value="みどり" onclick="SetColor(2)">
-              <input class="panel_btn panel_btn3" type="button" value="あお" onclick="SetColor(3)">
-            </div>
-            <p>
-              あそびかた
-            </p>
-            <p class="howtoplay">
-              自分で決めた色のボールだけを<br>
-              上の板に5回ぶつけよう！<br>
-              スマホをゆらすとふりこがゆれるよ！
-            </p>
-            <!-- <p>いまのもくひょう</p>
-            <span id="target_text">なし</span> -->
-          </div>
-        </div>
-        <div id="popup" class="panel inactive">
-          <div class="panel_text">
-          <p id="popup_text">text</p>
-          <input id="popup_button" class="panel_btn" type="button" value="とじる" onclick="ClosePopUp()">
-          </div>
-        </div>
-        <div id="box" class="box inactive">
-          <b id="box_text" class="box_text">
+  <head>
+    <meta charset="UTF-8" />
+    <title>スマホde振り子</title>
+    <link rel="stylesheet" href="css/pdgame.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet" />
+  </head>
 
-          </b>
+  <body>
+    <div id="container"></div>
+    <div id="menu" class="panel">
+      <div class="panel_text">
+        <p>もくひょうせってい</p>
+        <div class="panel_btn_group">
+          <input class="panel_btn panel_btn1" type="button" value="あか" onclick="SetColor(1)" />
+          <input class="panel_btn panel_btn2" type="button" value="みどり" onclick="SetColor(2)" />
+          <input class="panel_btn panel_btn3" type="button" value="あお" onclick="SetColor(3)" />
         </div>
-        <div id="menu_icon" class="menu_icon inactive">
-          <a href="javascript:void(0)" class="btn-circle-border-simple" onclick="OpenMenu()">
-            <i class="fas fa-bars"></i>
-          </a>
-        </div>
-        <div style="display:none;">
-          X座標：<input type="text" id="txtX">
-          Y座標：<input type="text" id="txtY">
-        </div>
-        <script src="./js/matter.min.js"></script>
-        <script src="./js/index.js"></script>
-    </body>
+        <p>あそびかた</p>
+        <p class="howtoplay">
+          自分で決めた色のボールだけを<br />
+          上の板に5回ぶつけよう！<br />
+          スマホをゆらすとふりこがゆれるよ！
+        </p>
+        <!-- <p>いまのもくひょう</p>
+            <span id="target_text">なし</span> -->
+      </div>
+    </div>
+    <div id="popup" class="panel inactive">
+      <div class="panel_text">
+        <p id="popup_text">text</p>
+        <p><a class="tweetButton inactive" href="#" target="_blank" id="tweetButton">結果をツイートする！</a></p>
+        <input id="popup_button" class="panel_btn" type="button" value="とじる" onclick="ClosePopUp()" />
+      </div>
+    </div>
+    <div id="box" class="box inactive">
+      <b id="box_text" class="box_text"> </b>
+    </div>
+    <div id="menu_icon" class="menu_icon inactive">
+      <a href="javascript:void(0)" class="btn-circle-border-simple" onclick="OpenMenu()">
+        <i class="fas fa-bars"></i>
+      </a>
+    </div>
+    <script src="./js/matter.min.js"></script>
+    <script src="./js/pdgame.js"></script>
+  </body>
 </html>
