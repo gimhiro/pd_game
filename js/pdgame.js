@@ -252,10 +252,10 @@ function MoveByMouse() {
 window.addEventListener(
   'deviceorientation',
   function (e) {
-    if (e.gamma > 10) {
-      walk(2);
-    } else if (e.gamma < -10) {
-      walk(-2);
+    if (e.gamma > 3) {
+      walk(2 * e.gamma / 10);
+    } else if (e.gamma < -3) {
+      walk(-2 * e.gamma / 10);
     }
   },
   false,
