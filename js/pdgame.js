@@ -255,7 +255,7 @@ window.addEventListener(
     if (e.gamma > 3) {
       walk(2 * e.gamma / 10);
     } else if (e.gamma < -3) {
-      walk(-2 * e.gamma / 10);
+      walk(2 * e.gamma / 10);
     }
   },
   false,
